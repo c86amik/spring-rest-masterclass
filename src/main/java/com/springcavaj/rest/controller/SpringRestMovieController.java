@@ -34,19 +34,19 @@ public class SpringRestMovieController {
 	
 	@GetMapping("/allMovies")
 	public List<Movie> getAllMovies(){
-		LOGGER.info("Return the list of all movies");
+		LOGGER.info("getAllMovies -> Return the list of all movies");
 		return springRestMovieService.getListOfAllMovies();
 	}
 	
 	@GetMapping("/findMovieByName/{name}")
 	public Movie getMovieByName(@PathVariable(value = "name") String movieName) {
-		LOGGER.info("Return the name of the movie by name : {}", movieName);
+		LOGGER.info("getMovieByName -> Return the name of the movie by name : {}", movieName);
 		return springRestMovieService.getSpecificMovieByName(movieName);
 	}
 	
 	@GetMapping("/findMoviesByYear/{year}")
 	public List<Movie> getMoviesByReleaseYear(@PathVariable(value = "year") String releaseYear) {
-		LOGGER.info("Return the list of all movies released in the year : {}", releaseYear);
+		LOGGER.info("getMoviesByReleaseYear -> Return the list of all movies released in the year : {}", releaseYear);
 		return springRestMovieService.getListOfAllMoviesByReleaseYear(releaseYear);
 	}
 	
@@ -63,25 +63,22 @@ public class SpringRestMovieController {
 		LOGGER.info("updateMovie -> Updating a Movie Record : {}", movie.toString());
 		List<Movie> movies = springRestMovieService.getListOfAllMovies();
 		CopyOnWriteArrayList<Movie> concurrentMovies = new CopyOnWriteArrayList<>(movies);
-		for(Movie preMovie : concurrentMovies) {
-			if(preMovie.getName().equalsIgnoreCase(movieName)) {
+		concurrentMovies.stream().filter(preMovie -> preMovie.getName().equalsIgnoreCase(movieName))
+			.forEach(preMovie -> {
 				concurrentMovies.remove(preMovie);
 				concurrentMovies.add(movie);
-			}
-		}
+			});
 		return Arrays.asList(concurrentMovies.toArray());
 	}
 	
 	@DeleteMapping("/deleteMovie/{name}")
 	public List<Object> deleteMovie(@PathVariable(value = "name") String movieName) {
-		LOGGER.info("updateMovie -> Deleting a Movie Record of name : {}", movieName);
+		LOGGER.info("deleteMovie -> Deleting a Movie Record of name : {}", movieName);
 		List<Movie> movies = springRestMovieService.getListOfAllMovies();
 		CopyOnWriteArrayList<Movie> concurrentMovies = new CopyOnWriteArrayList<>(movies);
-		for(Movie movie : concurrentMovies) {
-			if(movie.getName().equalsIgnoreCase(movieName)) {
-				concurrentMovies.remove(movie);
-			}
-		}
+		concurrentMovies.stream().filter(movie -> movie.getName().equalsIgnoreCase(movieName)).forEach(movie -> {
+			concurrentMovies.remove(movie);
+		});
 		return Arrays.asList(concurrentMovies.toArray());
 	}
 	
