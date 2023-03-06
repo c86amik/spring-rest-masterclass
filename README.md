@@ -32,19 +32,19 @@
 #### Dummy JSON object
 * Body for the <strong>POST</strong> Method   
 <code>{
-	"name" : ${movieName},
-	"releaseYear" : ${releaseYear},
-	"rating" : ${rating},
-	"actors" : [ ${actorName}, ${actressName}, ${villainName} ]
-	"director" : ${director},
-	"producer" : ${producer}
+	"name" : "Movie Name",
+	"releaseYear" : "2022",
+	"rating" : "9.8",
+	"actors" : [ "Actor", "Actress", "Villain" ]
+	"director" : "Director",
+	"producer" : "Producer"
 }</code>
 * Body for the <strong>PUT</strong> method
 <code>{
-	"name" : ${movieName},
-	"releaseYear" : ${releaseYear},
-	"rating" : ${rating},
-	"actors" : [ ${actorName}, ${actressName}, ${villainName} ]
-	"director" : ${director},
-	"producer" : ${producer}
+	"name" : "Movie Name",
+	"releaseYear" : "2022",
+	"rating" : "9.8",
+	"actors" : [ "Actor", "Actress", "Villain" ]
+	"director" : "Director",
+	"producer" : "Producer"
 }</code>
